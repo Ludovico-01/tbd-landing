@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TBD — The Best Day</title>
+<meta name="description" content="Conte o seu dia em 5 minutos de áudio. O TBD transforma em post, 3 prioridades para amanhã e memória da sua vida. Só você vê.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fg: #0f172a;
+    --muted: hsl(215, 25%, 32%);
+    --fallback: hsl(201, 100%, 13%);
+    --paper: #f7f8fa;
+    --line: rgba(15,23,42,.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--fg); background: var(--paper); }
+  a { color: inherit; }
+
+  /* HERO */
+  .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; background: var(--fallback); overflow: hidden; }
+  .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+  .hero .overlay { position: absolute; inset: 0; background: rgba(0,0,0,.2); z-index: 1; }
+  .hero > nav, .hero > main { position: relative; z-index: 2; }
+
+  nav {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    width: 100%; max-width: 1280px; margin: 0 auto; padding: 24px 32px;
+  }
+  .logo { font-family: 'Instrument Serif', serif; font-size: 30px; text-decoration: none; }
+  .links { display: none; gap: 40px; list-style: none; }
+  .links a { font-size: 14px; font-weight: 500; text-decoration: none; }
+  .right { justify-self: end; }
+  @media (min-width: 768px) { .links { display: flex; } }
+
+  .pill {
+    display: inline-block; border: 0; cursor: pointer; text-decoration: none;
+    border-radius: 9999px; background: #000; color: #fff;
+    font: 500 14px 'Inter', sans-serif; padding: 10px 24px;
+    transition: transform .2s ease-in-out;
+  }
+  .pill:hover { transform: scale(1.03); }
+  .pill.lg { font-size: 16px; padding: 20px 56px; }
+
+  main.heroc { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 48px 32px 96px; }
+  .content { max-width: 1280px; }
+  h1, h2, .serif { font-family: 'Instrument Serif', serif; font-weight: 400; }
+  h1 { font-size: 40px; line-height: .95; letter-spacing: -2.46px; max-width: 1000px; margin: 0 auto; }
+  @media (min-width: 768px) { h1 { font-size: 60px; } }
+  h1 em, h2 em { font-style: normal; }
+  p.sub { max-width: 670px; margin: 24px auto 0; font-size: 18px; line-height: 1.625; color: var(--muted); }
+  .cta { margin-top: 48px; }
+  .micro { margin-top: 16px; font-size: 14px; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
+
+  @keyframes fade-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .rise { opacity: 0; animation: fade-rise .8s ease-out forwards; }
+  .d2 { animation-delay: .2s; } .d4 { animation-delay: .4s; }
+  @media (prefers-reduced-motion: reduce) { .rise { animation: none; opacity: 1; } }
+
+  /* SECTIONS */
+  section { padding: 96px 32px; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h2 { font-size: 40px; line-height: 1; letter-spacing: -1.4px; max-width: 760px; }
+  @media (min-width: 768px) { h2 { font-size: 56px; } }
+  .lead { margin-top: 20px; max-width: 640px; font-size: 18px; line-height: 1.625; color: var(--muted); }
+  .center { text-align: center; } .center h2, .center .lead { margin-left: auto; margin-right: auto; }
+
+  /* espelho: grade de dias */
+  .grid365 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; max-width: 560px; margin: 40px auto 0; }
+  .grid365 i { aspect-ratio: 1; border-radius: 4px; border: 1px solid var(--line); }
+  .grid365 i.on { background: var(--fg); border-color: var(--fg); }
+  .caption { text-align: center; margin-top: 16px; font-size: 14px; color: var(--muted); }
+
+  .dark { background: var(--fallback); color: #fff; }
+  .dark .lead { color: rgba(255,255,255,.75); }
+
+  /* método */
+  .steps { display: grid; gap: 24px; margin-top: 48px; grid-template-columns: 1fr; }
+  @media (min-width: 768px) { .steps { grid-template-columns: repeat(4, 1fr); } }
+  .step { border-top: 1px solid rgba(255,255,255,.3); padding-top: 20px; }
+  .step b { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 40px; display: block; letter-spacing: -1px; }
+  .step span { font-size: 14px; color: rgba(255,255,255,.6); }
+  .step p { margin-top: 10px; line-height: 1.6; color: rgba(255,255,255,.85); }
+
+  /* verdade */
+  .quote { margin-top: 40px; max-width: 640px; padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+  .quote small { display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .quote p { font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1.2; }
+
+  /* comparativo */
+  table { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 15px; }
+  th, td { text-align: left; padding: 16px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 500; font-size: 14px; color: var(--muted); }
+  td:last-child { font-weight: 500; }
+  .tablewrap { overflow-x: auto; }
+
+  /* preço */
+  .plans { display: grid; gap: 20px; margin-top: 48px; grid-template-columns: 1fr; max-width: 760px; margin-left: auto; margin-right: auto; }
+  @media (min-width: 768px) { .plans { grid-template-columns: 1fr 1fr; } }
+  .plan { text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 32px; }
+  .plan.hl { background: var(--fg); color: #fff; border-color: var(--fg); }
+  .plan h3 { font-size: 14px; font-weight: 500; opacity: .7; }
+  .plan .price { font-family: 'Instrument Serif', serif; font-size: 56px; letter-spacing: -1.5px; margin: 8px 0; }
+  .plan p { font-size: 14px; line-height: 1.6; opacity: .8; }
+  .plan.hl .pill { background: #fff; color: #000; }
+  .plan .pill { margin-top: 24px; }
+
+  /* faq */
+  details { border-bottom: 1px solid var(--line); padding: 20px 0; }
+  summary { cursor: pointer; font-size: 18px; font-weight: 500; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; float: right; font-weight: 400; }
+  details[open] summary::after { content: '–'; }
+  details p { margin-top: 12px; line-height: 1.625; color: var(--muted); max-width: 680px; }
+
+  footer { padding: 40px 32px; text-align: center; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer a { margin: 0 10px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <video autoplay muted loop playsinline src="https://designerstephen.github.io/public-assets/videos/serene-art-hero.mp4"></video>
+  <div class="overlay"></div>
+
+  <nav>
+    <a class="logo" href="#">TBD</a>
+    <ul class="links">
+      <li><a href="#como">Como funciona</a></li>
+      <li><a href="#metodo">O método</a></li>
+      <li><a href="#privacidade">Privacidade</a></li>
+      <li><a href="#preco">Preço</a></li>
+    </ul>
+    <div class="right"><a class="pill" href="https://instatbd.vercel.app">Começar meu ano</a></div>
+  </nav>
+
+  <main class="heroc">
+    <div class="content">
+      <h1 class="rise">Você vê a vida dos outros <em>todo dia</em>.<br>Agora veja a sua.</h1>
+      <p class="sub rise d2">Uma vez por dia, você conta como foi o seu dia num áudio de 5 minutos. O TBD transforma isso no post do dia, nas suas 3 prioridades de amanhã, nas pessoas que você conheceu e no andamento dos seus projetos. Só você vê. E daqui a um ano, você vai lembrar de cada dia.</p>
+      <div class="cta rise d4">
+        <a class="pill lg" href="https://instatbd.vercel.app">Contar meu primeiro dia</a>
+        <p class="micro">7 dias grátis · cancele quando quiser · só você vê</p>
+      </div>
+    </div>
+  </main>
+</header>
+
+<section id="como">
+  <div class="wrap center">
+    <h2>Quantos dias deste ano você realmente <em>lembra</em>?</h2>
+    <p class="lead">A gente passa horas por dia vendo a vida dos outros. E chega em dezembro sem lembrar da nossa.</p>
+    <div class="grid365" id="grid" aria-hidden="true"></div>
+    <p class="caption">Cada quadrado é um dia. Os escuros são os que ficaram na memória.</p>
+  </div>
+</section>
+
+<section style="background:#fff">
+  <div class="wrap">
+    <h2>Não é falta de disciplina. É que ninguém te ensinou a <em>fechar o dia</em>.</h2>
+    <p class="lead">Pesquisadores de Harvard e da HEC mediram: funcionários que passaram 15 minutos no fim do dia refletindo sobre o que aprenderam foram cerca de 23% melhores no teste final de um treinamento. O que mais motiva, aliás, não é a meta gigante: é ver o pequeno progresso de hoje. É exatamente isso que o seu feed mostra.</p>
+  </div>
+</section>
+
+<section id="metodo" class="dark">
+  <div class="wrap">
+    <h2>O método TBD: Conte, veja, faça, <em>lembre</em>.</h2>
+    <p class="lead">Um ritual de 5 minutos, não mais um app para te prender na tela.</p>
+    <div class="steps">
+      <div class="step"><span>5 minutos, à noite</span><b>Conte</b><p>Um áudio, do jeito que você falaria com um amigo. Sem escrever, sem organizar.</p></div>
+      <div class="step"><span>Na hora</span><b>Veja</b><p>O seu dia vira um post, com a verdade dura do mentor embaixo.</p></div>
+      <div class="step"><span>No dia seguinte</span><b>Faça</b><p>Você acorda com 3 prioridades verificadas. Não 20. Três.</p></div>
+      <div class="step"><span>Para sempre</span><b>Lembre</b><p>Pessoas, projetos e fatos ficam salvos. Daqui a um ano, “Neste dia” mostra quem você era.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Um mentor que <em>não passa pano</em>.</h2>
+    <p class="lead">O TBD foi feito para dizer a verdade dura, sem elogio vazio. Direto, no estilo cursinho, apontando quando você está se enganando.</p>
+    <div class="quote">
+      <small>Exemplo de conclusão</small>
+      <p>“Você citou cinco projetos hoje e avançou em nenhum. Amanhã, escolha um e termine a primeira etapa antes do almoço.”</p>
+    </div>
+  </div>
+</section>
+
+<section id="privacidade" style="background:#fff">
+  <div class="wrap">
+    <h2>A primeira rede social com um seguidor só: <em>você</em>.</h2>
+    <p class="lead">Não tem feed infinito nem vida dos outros. Acabou o seu dia, acabou o app.</p>
+    <ul class="lead" style="margin-left:20px;line-height:2">
+      <li>Sem seguidores e sem curtidas de ninguém.</li>
+      <li>Nada é público. Cada conta só enxerga os próprios dados.</li>
+      <li>Você exporta tudo quando quiser.</li>
+      <li>O relato é processado por empresas de IA (Anthropic e Groq) apenas para gerar a sua análise.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Por que os outros <em>morrem em fevereiro</em>.</h2>
+    <div class="tablewrap">
+      <table>
+        <tr><th>Alternativa</th><th>Por que larga</th><th>TBD</th></tr>
+        <tr><td>Diário de papel</td><td>Dá trabalho e não devolve nada</td><td>Você fala; ele devolve post, prioridades e memória</td></tr>
+        <tr><td>Notion e planilhas</td><td>Manter o sistema vira o trabalho</td><td>Zero sistema: a IA monta</td></tr>
+        <tr><td>Apps de hábito</td><td>Checklist vazio, sem sentido</td><td>A rotina tem um porquê: o post do dia</td></tr>
+        <tr><td>Diários com IA em inglês</td><td>Parece consulta, não parece vida</td><td>Cara de rede social, em português, com tarefas e pessoas</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="preco" style="background:#fff">
+  <div class="wrap center">
+    <h2>O seu ano inteiro, <em>contado</em>.</h2>
+    <p class="lead">Conte 7 dias. Se não fizer sentido, cancele.</p>
+    <div class="plans">
+      <div class="plan"><h3>Mensal</h3><div class="price">R$ 27</div><p>Para começar hoje.</p><a class="pill" href="https://instatbd.vercel.app">Começar meu ano</a></div>
+      <div class="plan hl"><h3>Anual</h3><div class="price">R$ 220</div><p>O seu ano inteiro, contado. 2 meses grátis.</p><a class="pill" href="https://instatbd.vercel.app">Garantir meu ano</a></div>
+    </div>
+    <p class="caption">Valores de exemplo para teste.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Perguntas <em>frequentes</em>.</h2>
+    <div style="margin-top:32px">
+      <details><summary>Mais um app que eu vou largar?</summary><p>É um áudio por dia. Se você manda áudio no WhatsApp, você consegue usar o TBD.</p></details>
+      <details><summary>Não tenho tempo.</summary><p>Você tem horas por dia para a vida dos outros. Precisamos de 5 minutos para a sua.</p></details>
+      <details><summary>Meu diário é íntimo. E a IA?</summary><p>Só você vê. Nada é público. O relato é processado por Anthropic e Groq somente para gerar a análise, e você exporta seus dados quando quiser.</p></details>
+      <details><summary>Eu já uso Notion.</summary><p>O Notion organiza projetos. O TBD organiza você, e você não precisa montar nada.</p></details>
+      <details><summary>Não gosto de falar sozinho.</summary><p>Pode escrever. Áudio é só o jeito mais rápido.</p></details>
+      <details><summary>Parece rede social, vou me viciar mais?</summary><p>É o contrário: não tem feed infinito nem vida dos outros. Acabou o seu dia, acabou o app.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="dark center">
+  <div class="wrap">
+    <h2>Daqui a um ano você vai querer ter <em>começado hoje</em>.</h2>
+    <div style="margin-top:40px"><a class="pill lg" style="background:#fff;color:#000" href="https://instatbd.vercel.app">Começar meu ano</a></div>
+  </div>
+</section>
+
+<footer>
+  <a href="#">Privacidade</a><a href="#">Termos</a><br><br>
+  TBD · The Best Day. O TBD não é terapia nem tratamento de saúde mental.
+</footer>
+
+<script>
+  // grade "espelho": 12 meses x 12 linhas, poucos dias preenchidos
+  var g = document.getElementById('grid'), on = [7, 23, 58, 71, 102, 130];
+  for (var i = 0; i < 144; i++) { var s = document.createElement('i'); if (on.indexOf(i) > -1) s.className = 'on'; g.appendChild(s); }
+</script>
+</body>
+</html>
